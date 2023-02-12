@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_DATABASE
+    volumes:
+      - ./mongodb_data:/data/db
+
+  chatgpt:
+    image: nordz0r/chatgpt:latest
+    container_name: chatgpt
+    environment:
+      - OPENAI_API_KEY
+      - TELEGRAM_TOKEN
+      - MONGO_INITDB_DATABASE
+    depends_on:
+      - mongo
+
