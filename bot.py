@@ -8,7 +8,7 @@ import json
 openai.api_key = os.getenv("OPENAI_API_KEY")
 telegram_token = os.getenv("TELEGRAM_TOKEN")
 mongo_db = os.getenv("MONGO_INITDB_DATABASE")
-temperature = os.getenv("TEMPERATURE")
+temperature = float(os.getenv("TEMPERATURE"))
 
 bot = telebot.TeleBot(telegram_token)
 
@@ -74,7 +74,7 @@ def handle(message):
             max_tokens=1024,
             n=1,
             stop=None,
-            temperature=int(temperature)
+            temperature=temperature
         ).get("choices")[0].text
         dialog = prompt + response
         dialog = json.dumps(dialog[-2000:])
