@@ -8,6 +8,7 @@ services:
       - MONGO_INITDB_DATABASE
     volumes:
       - ./mongodb_data:/data/db
+    restart: always
 
   chatgpt:
     image: nordz0r/chatgpt:latest
@@ -18,4 +19,4 @@ services:
       - MONGO_INITDB_DATABASE
     depends_on:
       - mongo
-
+    restart: always

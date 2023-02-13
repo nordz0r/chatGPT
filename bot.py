@@ -8,6 +8,7 @@ import json
 openai.api_key = os.getenv("OPENAI_API_KEY")
 telegram_token = os.getenv("TELEGRAM_TOKEN")
 mongo_db = os.getenv("MONGO_INITDB_DATABASE")
+temperature = os.getenv("TEMPERATURE")
 
 bot = telebot.TeleBot(telegram_token)
 
@@ -66,19 +67,24 @@ def handle(message):
         prompt = previous_dialogue + prompt
 
     log_message('user', message)
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.5
-    ).get("choices")[0].text
-    dialog = prompt + response
-    dialog = json.dumps(dialog[-2000:])
-    save_current_dialogue(user_id, dialog)
-    log_message('bot', response)
-    bot.send_message(message.chat.id, response)
+    try:
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt=prompt,
+            max_tokens=1024,
+            n=1,
+            stop=None,
+            temperature=int(temperature)
+        ).get("choices")[0].text
+        dialog = prompt + response
+        dialog = json.dumps(dialog[-2000:])
+        save_current_dialogue(user_id, dialog)
+        log_message('bot', response)
+        bot.send_message(message.chat.id, response)
+    except openai.error.ServiceUnavailableError as e:
+        # Handle the exception
+        print("Service Unavailable:", e)
+        bot.send_message(message.chat.id, "OpenAI перегружен. Попробуйте повторить свой вопрос через несколько минут.")
 
 
 print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] Bot started!")
