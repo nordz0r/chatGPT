@@ -77,6 +77,7 @@ def handle(message):
             temperature=temperature
         ).get("choices")[0].text
         dialog = prompt + response
+        # Ограничивать отправленный диалог в 2000 символов
         dialog = json.dumps(dialog[-2000:])
         save_current_dialogue(user_id, dialog)
         log_message('bot', response)
