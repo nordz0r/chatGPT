@@ -17,6 +17,7 @@ services:
       - OPENAI_API_KEY
       - TELEGRAM_TOKEN
       - MONGO_INITDB_DATABASE
+      - TEMPERATURE
     depends_on:
       - mongo
     restart: always
