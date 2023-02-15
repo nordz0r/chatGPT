@@ -82,7 +82,7 @@ def handle(message):
         save_current_dialogue(user_id, dialog)
         log_message('bot', response)
         bot.send_message(message.chat.id, response)
-    except openai.error.ServiceUnavailableError as e:
+    except Exception as e:
         # Handle the exception
         print("Service Unavailable:", e)
         bot.send_message(message.chat.id, "OpenAI перегружен. Попробуйте повторить свой вопрос через несколько минут.")
