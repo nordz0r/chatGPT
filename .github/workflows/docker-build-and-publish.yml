@@ -30,4 +30,4 @@ jobs:
         push: true
         tags: |
           nordz0r/chatgpt:latest
-          nordz0r/chatgpt:${{ github.sha | slice(0, 5) }}
+          nordz0r/chatgpt:${{ github.sha }}
