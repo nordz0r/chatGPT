@@ -9,6 +9,11 @@ Edit .env file
 docker build -t chatgpt:v1 .
 ```
 
+## or Pull
+```commandline
+docker-compose pull 
+```
+
 ## Run
 ```
 docker-compose up -d
@@ -16,7 +21,7 @@ docker-compose up -d
 
 ## ToDo
 - [ ] Make code output to Telegram in Markdown
-- [ ] Write a GitHub Action to build
+- [x] Write a GitHub Action to build
 
 ## DockerHub
 https://hub.docker.com/r/nordz0r/chatgpt
