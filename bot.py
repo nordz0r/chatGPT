@@ -24,8 +24,7 @@ def get_previous_dialogue(user_id):
     previous_dialogue = dialogues_collection.find_one({"user_id": user_id})
     if previous_dialogue:
         return json.loads(previous_dialogue["dialogue"])
-    else:
-        return None
+    return None
 
 # Функция для сохранения текущего диалога в базе данных
 def save_current_dialogue(user_id, dialogue):
@@ -78,7 +77,7 @@ def handle(message):
         ).get("choices")[0].text
         dialog = prompt + response
         # Ограничивать отправленный диалог в 2000 символов
-        dialog = json.dumps(dialog[-2000:])
+        dialog = json.dumps(dialog[-1000:])
         save_current_dialogue(user_id, dialog)
         log_message('bot', response)
         bot.send_message(message.chat.id, response)
