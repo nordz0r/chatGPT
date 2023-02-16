@@ -47,8 +47,7 @@ jobs:
         release_name: Release ${{ github.sha }}
         draft: false
         prerelease: false
-        body:
-          Docker image tag: ${{ steps.docker_build.outputs.digest }}
+        body: "Docker image tag: ${{ steps.docker_build.outputs.digest }}"
 
     - name: Attach Docker image to Release
       id: upload-release-asset
